@@ -33,7 +33,7 @@ async function openModel(blob,fromJob=false){
   if(blob.size>100*1024*1024)throw Error('المجسم أكبر من حد المعاينة 100 MB.');
   const revision=++loadRevision;const next=await window.AIMViewer.load(await blob.arrayBuffer());if(revision!==loadRevision)return;
   currentBlob=blob;stats=next;if(!fromJob){currentJob=null;jobReport=null;}
-  $('#empty-view').hidden=true;$('#mesh-stats').textContent=`${next.triangles.toLocaleString('ar')} مثلث · ${next.parts.length} جزء في الملف`;
+  $('#empty-view').hidden=true;$('#mesh-stats').textContent=`${next.triangles.toLocaleString('ar')} مثلث · ${next.parts.length} جزء في الملف${fromJob&&jobReport?.result?.pieces?` · ${jobReport.result.pieces} قطعة في SketchUp`:''}`;
   renderParts(next.parts);updateControls();
 }
 async function connect(raw){
